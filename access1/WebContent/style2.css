@@ -1,0 +1,177 @@
+@charset "UTF-8";
+
+body {
+  background-color: rgb(255, 255, 255);
+}
+
+form {
+  width: 80%;
+  padding: 40px 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-color: rgb(255, 255, 255);
+  text-align: center;
+}
+
+form h1,form p {
+  color: rgb(0, 0, 255);
+  font-weight: 500;
+}
+
+form p {
+  font-size: 15px;
+}
+form select[name="mode"] {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  border: 2px solid RGB(102,102,204);
+  padding: 15px 10px;
+  width: 225px;
+  outline: none;
+  border-radius: 24px;
+  transition: 0.25s;
+  text-align: center;
+  color: RGB(102,102,204);
+}
+
+
+
+form input[type = "id"],form input[type = "password"] {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  border: 2px solid RGB(102,102,204);
+  padding: 15px 10px;
+  width: 200px;
+  outline: none;
+  border-radius: 24px;
+  transition: 0.25s;
+  text-align: center;
+  color: rgb(0, 0, 255);
+}
+
+form input[type = "id"]:focus,form input[type = "password"]:focus,form select[name="mode"]:focus {
+  width: 280px;
+  background-color: RGB(102,102,204);
+  color: rgb(0, 0, 0);
+}
+
+form input[type = "submit"]{
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  border: 2px solid RGB(102,102,204);
+  padding: 15px 10px;
+  width: 220px;
+  outline: none;
+  color: rgb(0, 0, 255);
+  border-radius: 25px;
+  transition: 0.25s;
+  text-align: center;
+  cursor: pointer;
+}
+
+form input[type = "submit"]:hover {
+  background-color: RGB(102,102,204);
+  border: 2px solid rgb(0, 0, 255);
+  color: rgb(255, 255, 255);
+}
+
+::placeholder {
+  color: white;
+}
+
+form input[type = "button"]{
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  border: 2px solid RGB(102,102,204);
+  padding: 15px 10px;
+  width: 220px;
+  outline: none;
+  color: rgb(0, 0, 255);
+  border-radius: 25px;
+  transition: 0.25s;
+  text-align: center;
+  cursor: pointer;
+}
+
+form input[type = "button"]:hover {
+  background-color: RGB(102,102,204);
+  border: 2px solid rgb(0, 0, 255);
+  color: rgb(255, 255, 255);
+}
+
+
+
+.design04 {
+ width: 100%;
+ text-align: center;
+ border-collapse: collapse;
+ border-spacing: 0;
+ background: #e6e6fa;
+}
+.design04 tr:nth-child(2n+1) {
+ background: #e9faf9;
+}
+.design04 th {
+ padding: 10px;
+ background: #778ca3;
+ border-right: solid 1px #778ca3;
+ color: #ffffff;
+}
+.design04 th:last-child {
+ border-right: none;
+}
+.design04 td {
+ padding: 10px;
+ border-right: solid 1px #778ca3;
+}
+.design04 td:last-child {
+ border-right: none;
+}
+
+a.btn_04 {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  border: 2px solid #f0f8ff;
+  padding: 15px 10px;
+  width: 200px;
+  height:20px;
+  outline: none;
+  color: white;
+  border-radius: 25px;
+  transition: 0.25s;
+  text-align: center;
+  cursor: pointer;
+}
+a.btn_04:hover {
+  background-color: rgb(0, 0, 255);
+  border: 2px solid rgb(0, 0, 255);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
