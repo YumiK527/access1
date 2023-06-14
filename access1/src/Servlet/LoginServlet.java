@@ -16,36 +16,29 @@ import dao.AccountDBConnect;
 import dao.StudentDBConnect;
 import logic.ValueCheck;
 
-/**
- * Servlet implementation class LoginServlet
- */
+
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-
-
-
     //ログイン画面を表示させる
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		request.setCharacterEncoding("UTF-8");
-		//アクション属性取得
-		String action = request.getParameter("account");
-		//ログアウトの場合
-		if (action != null && action.equals("logout")) {
-			//ログイン情報をスコープから削除
-			HttpSession session = request.getSession();
-			session.removeAttribute("account");
-			//TOP画面へフォワード
-			request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
-		}
+
+//		//アクション属性取得
+//		String action = request.getParameter("account");
+//		//ログアウトの場合
+//		if (action != null && action.equals("logout")) {
+//			//ログイン情報をスコープから削除
+//			HttpSession session = request.getSession();
+//			session.removeAttribute("account");
+//			//TOP画面へフォワード
+//			request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+//		}
 		//ログイン画面へフォワード
 		request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request,
 				response);
-
 	}
-
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -67,24 +60,27 @@ public class LoginServlet extends HttpServlet {
 		request.setAttribute("msg", message);
 
 
+		//メソッド実行し生徒リストを用意(.showSortGrade()学年順/showSortCode()生徒番号順
+		List<Student> studentList = new StudentDBConnect(). showSortGrade();
+		//セッションスコープに生徒リスト保存
+		session.setAttribute("studentList", studentList);
+
 
 		if ("User Id、または Password が間違ってます。<br>".equals(message)) {
 			//ログイン失敗時 同じページログインページにフォワード
 			request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
 		} else if ("mode1".equals(mode)) {
 			//ログイン成功の処理 mode1：入退室連絡
-			//匿名クラスでメソッド実行し生徒リストを用意
-			List<Student> studentList = new StudentDBConnect().showAll();
-			//セッションスコープに生徒リスト保存
-			session.setAttribute("studentList", studentList);
+			//セッションスコープに処理モードを保存
+			session.setAttribute("processmode", "mode1top");
 			//入退室連絡画面へフォワード
 			request.getRequestDispatcher("/WEB-INF/jsp/mode1.jsp").forward(request, response);
 		} else if("mode2".equals(mode)){
 			//ログイン成功の処理 mode2:管理画面
-			//匿名クラスでメソッド実行し生徒リストを用意
-			List<Student> studentList = new StudentDBConnect().showAll();
-			//セッションスコープに生徒リスト保存
-			session.setAttribute("studentList", studentList);
+			String sort ="並べ替え：学年順";
+			request.setAttribute("sort", "並べ替え：学年順");
+			//セッションスコープに処理モードを保存
+			session.setAttribute("processmode", "mode2top");
 			//管理画面へフォワード
 			request.getRequestDispatcher("/WEB-INF/jsp/mode2.jsp").forward(request, response);
 		} else {
@@ -92,5 +88,6 @@ public class LoginServlet extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
 		}
 	}
-
 }
+//
+//           http://localhost:8080/access1/LoginServlet

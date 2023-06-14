@@ -14,7 +14,6 @@
 			<h1>
 				<font face="HG丸ｺﾞｼｯｸM-PRO">送信しました。</font>
 			</h1>
-			<%--<input type="submit" name="botton"  value="入退室連絡に戻る"> --%>
 			<input type="submit"  name="menue" value="メニュー">
 			<input type="submit"  name="logout" value="ログアウト">
 		</form>

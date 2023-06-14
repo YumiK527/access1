@@ -1,46 +1,54 @@
-<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%><%@page import="java.util.Random"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ page import="java.util.List,beans.Student"%>
 <%@ page import="beans.Student"%>
 <%
+//処理モードをセッションスコープから取得
+String processmode = (String)session.getAttribute("processmode");
+
 List<Student> studentList = (List<Student>) session.getAttribute("studentList");
 
-// 結果メッセージをリクエストスコープから取得
-String msg = (String) request.getAttribute("msg");
+//結果メッセージをリクエストスコープから取得
+ String msg = (String) request.getAttribute("msg");
+
 //セッションスコープから登録情報を取得
 Student tempStudent = (Student) session.getAttribute("tempStudent");
 String code = "";
 String name = "";
 String grade = "";
-String pass = "";
+//パスワード自動作成（数字4桁）
+Random rand = new Random();
+int pass =rand.nextInt(9000)+1000;
 String mailaddres = "";
 String send = "";
 String point = "0";
-msg = "";
+
 if (tempStudent != null) {
 	code = tempStudent.getCode();
 	name = tempStudent.getName();
-	grade = tempStudent.getGrade();
-	pass = tempStudent.getPass();
+	grade = tempStudent.getGrade();//.substring(2, 5);
+	//pass
 	mailaddres = tempStudent.getMailaddres();
 	send = tempStudent.getSend();
 	point = tempStudent.getPoint();
 
 	//リクエストスコープからインスタンスを取得
-	if (msg != null || msg != "") {
-		msg = (String) request.getAttribute("msg");
+	if(msg != null || msg!=""){
+	 msg = (String)request.getAttribute("msg");
 	}
 
-}
+ }
+
 %>
 <%
-String[] gradeAllay = { "", "S1(小1)", "S2(小2)", "S3(小3)", "S4(小4)", "S5(小5)", "S6(小6)", "C1(中1)", "C2(中2)", "C3(中3)","K1(高1)", "K2(高2)", "K3(高3)", };
+String[] gradeAllay = { "", "小１", "小２", "小３", "小４", "小５", "小６", "中１", "中２", "中３","高１", "高２", "高３", };
 %>
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-store">
 <title>【生徒追加】</title>
 <link rel="stylesheet" href="style3add.css">
 <style>
@@ -55,14 +63,17 @@ String[] gradeAllay = { "", "S1(小1)", "S2(小2)", "S3(小3)", "S4(小4)", "S5(
 		<form action="/access1/Mode2addServlet" method="post"
 			name="login_form">
 			<h1 style="text-align: center">
-				<font face="HG丸ｺﾞｼｯｸM-PRO" color="#52c2d0">生徒入力画面</font>
+				<font face="HG丸ｺﾞｼｯｸM-PRO" color="blue">新規生徒入力</font>
 			</h1>
-			<font color="red"> <%
- if (msg != null) {
- %> <%=msg%> <%
- }
- %>
-			</font>
+			<h4>
+				<font face="HG丸ｺﾞｼｯｸM-PRO" color="blue"> 生徒情報を入力してください。</font>
+			</h4>
+			<h3 style="text-align: left">
+				<font face="HG丸ｺﾞｼｯｸM-PRO" color="red">
+				 <%if (msg != null) { %>
+					<%=msg%> <% } %>
+				</font>
+			</h3>
 
 			<table id="mode2">
 				<colgroup>
@@ -101,10 +112,9 @@ String[] gradeAllay = { "", "S1(小1)", "S2(小2)", "S3(小3)", "S4(小4)", "S5(
 					<th>連絡可否</th>
 					<td></td>
 					<td><select name="send" required>
-							<option></option>
-							<option value="ok">ｏｋ</option>
-							<option value="no">ｎｏ</option>
-							<option><%=send%>
+							<option value="ok">ok</option>
+							<option value="no">no</option>
+							<option selected><%=send%>
 							</option>
 					</select><font color="#aaa"> ok(送る) / no(送らない)</font></td>
 				</tr>
@@ -118,7 +128,7 @@ String[] gradeAllay = { "", "S1(小1)", "S2(小2)", "S3(小3)", "S4(小4)", "S5(
 					<th>ポイント</th>
 					<td></td>
 					<td><input type="number" name="point" size="6" required
-						maxlength="4" step="10" min="0" max="9999" id="number"
+						maxlength="4" step="1" min="0" max="9999" id="number"
 						value="<%=point%>"></td>
 				</tr>
 				<tr>
@@ -126,12 +136,8 @@ String[] gradeAllay = { "", "S1(小1)", "S2(小2)", "S3(小3)", "S4(小4)", "S5(
 					<td></td>
 					<td><input type="text" name="pass" required size="4"
 						maxlength="4"
-						value="<%=pass%> <%StringBuilder randomPass = new StringBuilder();
-for (int i = 0; i < 4; i++) {
-	randomPass.append((int) Math.ceil(Math.random() * 10));
-	randomPass.toString();
-}%><%=randomPass%> ">
-						<font color="#aaa">※自動作成（任意値の入力可能）</font><br></td>
+						value="<%=pass%>">
+					<font color="#aaa">※自動作成（任意値の入力可能）</font><br></td>
 				</tr>
 			</table>
 

@@ -101,7 +101,6 @@ public class StudentDBConnect {
 				}else {}
 				return null;
 			}
-
 		} catch (Exception e) {
 			System.out.println("DBアクセス時にエラーが発生しました。");
 			e.printStackTrace();
@@ -113,8 +112,8 @@ public class StudentDBConnect {
 //登録画面からデータを1件登録するメソッド
 public boolean insertStudentData(Student student) {
 	//SQL文の用意
-	String sql = "INSERT INTO student(code,name,grade,pass,mailaddres,send,point)";
-	sql += "values(?, ?, ?, ?, ?, ?, ?);";
+	String sql = "INSERT INTO student(code,name,grade,pass,mailaddres,send,point,gradecode)";
+	sql += "values(?, ?, ?, ?, ?, ?, ?, ?);";
 	//リターン用変数
 	boolean isInsert = true;
 
@@ -130,18 +129,20 @@ public boolean insertStudentData(Student student) {
 		ps.setString(5, student.getMailaddres());
 		ps.setString(6, student.getSend());
 		ps.setString(7, student.getPoint());
+		ps.setString(8, student.getGc());
 		//INSERT文の結果を確認
 		int result = ps.executeUpdate();
+		System.out.println(result);
 		if (result == 0) {
-			return false;
+			 isInsert =false;
 		}
 		System.out.println( "登録しました");
+		 //isInsert = true;
 
 	} catch (Exception e) {
 		System.err.println("登録エラー");
-		e.printStackTrace();
+		 isInsert = false;
 	}
-
 	return isInsert;
 }
 
@@ -156,7 +157,7 @@ public boolean deleteStudent(String code) {
 	try (Connection con = DriverManager.getConnection(URL, USER,
 			PASSWORD)) {
 		PreparedStatement ps = con.prepareStatement(sql);
-		//商品データをSQL文に差し替え
+		//データをSQL文に差し替え
 		ps.setString(1, code);
 		//INSERT文の結果を確認
 		int result = ps.executeUpdate();
@@ -172,4 +173,82 @@ public boolean deleteStudent(String code) {
 	return isDelete;
 }
 
+//生徒データを学年順に並べ替えるメソッド
+public List<Student> showSortGrade () {
+
+	String sql = "SELECT * FROM Student order by gradecode;";
+
+	Student student = null;
+	List<Student> studentList = new ArrayList<Student>();
+
+	try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+			PreparedStatement st = con.prepareStatement(sql);) {
+
+		/* 3) SQL文の実行 */
+		ResultSet rs = st.executeQuery();
+
+		/* 4) 結果をリストに移し替える */
+		while (rs.next()) {
+			// 1行分のデータを読込む
+			String code = rs.getString("code");
+			String name = rs.getString("name");
+			String grade = rs.getString("grade");
+			String pass = rs.getString("pass");
+			String mailaddres = rs.getString("mailaddres");
+			String send = rs.getString("send");
+			String point = rs.getString("point");
+			// データを格納するインスタンス
+			student = new Student(code,name,grade,pass,mailaddres,send,point);
+
+			// リストに1行分のデータを追加
+			studentList.add(student);
+		}
+
+	} catch (Exception e) {
+		System.out.println("DBアクセス時にエラーが発生しました。");
+		e.printStackTrace();
+	}
+	return studentList;
+	}
+
+
+//生徒データを生徒番号順に並べ替えるメソッド
+public List<Student> showSortCode () {
+
+	String sql = "SELECT * FROM Student order by code;";
+
+	Student student = null;
+	List<Student> studentList = new ArrayList<Student>();
+
+	try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+			PreparedStatement st = con.prepareStatement(sql);) {
+
+		/* 3) SQL文の実行 */
+		ResultSet rs = st.executeQuery();
+
+		/* 4) 結果をリストに移し替える */
+		while (rs.next()) {
+			// 1行分のデータを読込む
+			String code = rs.getString("code");
+			String name = rs.getString("name");
+			String grade = rs.getString("grade");
+			String pass = rs.getString("pass");
+			String mailaddres = rs.getString("mailaddres");
+			String send = rs.getString("send");
+			String point = rs.getString("point");
+			// データを格納するインスタンス
+			student = new Student(code,name,grade,pass,mailaddres,send,point);
+
+			// リストに1行分のデータを追加
+			studentList.add(student);
+		}
+
+	} catch (Exception e) {
+		System.out.println("DBアクセス時にエラーが発生しました。");
+		e.printStackTrace();
+	}
+	return studentList;
+	}
+
 }
+

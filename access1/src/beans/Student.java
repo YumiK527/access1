@@ -10,7 +10,7 @@ public class Student  implements Serializable{
 	private String mailaddres;
 	private String send;
 	private String point;
-	private int pointInt;
+	private String gc;
 
 
 	public  Student() {}
@@ -26,18 +26,15 @@ public class Student  implements Serializable{
 		this.point = point;
 	}
 
-	public  Student(String code,String name,String grade,String pass,String mailaddres,String send,int pointInt) {
+	public  Student(String code,String name,String grade,String pass,String mailaddres,String send,String point,String gc) {
 		this.code = code;
 		this.name = name;
 		this.grade = grade;
 		this.pass = pass;
 		this.mailaddres = mailaddres;
 		this.send = send;
-		this.pointInt = pointInt;
-	}
-
-	public  Student(String code) {
-		this.code = code;
+		this.point = point;
+		this.gc = gc;
 	}
 
 	public String getCode() {
@@ -96,23 +93,13 @@ public class Student  implements Serializable{
 		this.point = point;
 	}
 
-	public int getPointInt() {
-		return pointInt;
+	public String getGc() {
+		return gc;
 	}
 
-	public void setPointInt(int pointInt) {
-		this.pointInt = pointInt;
+	public void setGc(String gc) {
+		this.gc = gc;
 	}
 
-	//管理画面から商品情報を追加する場合のコンストラクタ
-//	public Shohin(String shohinMei, String shohinBunrui, int hanbaiTanka, int shiireTanka, String releseDate,
-//			int stock, String show) {
-//		this.shohinMei = shohinMei;
-//		this.shohinBunrui = shohinBunrui;
-//		this.hanbaiTanka = hanbaiTanka;
-//		this.shiireTanka = shiireTanka;
-//		this.releseDate = Date.valueOf(releseDate);
-//		this.stock = stock;
-//		this.show = show;
-//	}
+
 }

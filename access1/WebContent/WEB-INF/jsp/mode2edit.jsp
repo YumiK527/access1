@@ -5,6 +5,9 @@
 <%@ page import="java.util.List,beans.Student"%>
 <%@ page import="beans.Student"%>
 <%
+//処理モードをセッションスコープから取得
+String processmode = (String)session.getAttribute("processmode");
+
 List<Student> studentList = (List<Student>) session.getAttribute("studentList");
 
 // 結果メッセージをリクエストスコープから取得
@@ -19,25 +22,14 @@ String mailaddres = "";
 String send = "";
 String point = "0";
 msg = "";
-if (tempStudent != null) {
-	code = tempStudent.getCode();
-	name = tempStudent.getName();
-	grade = tempStudent.getGrade();
-	pass = tempStudent.getPass();
-	mailaddres = tempStudent.getMailaddres();
-	send = tempStudent.getSend();
-	point = tempStudent.getPoint();
-
 	//リクエストスコープからインスタンスを取得
 	if (msg != null || msg != "") {
 		msg = (String) request.getAttribute("msg");
 	}
-
-}
 %>
 <%
 Student student = (Student) session.getAttribute("student");
-String[] gradeAllay = { "", "S1(小1)", "S2(小2)", "S3(小3)", "S4(小4)", "S5(小5)", "S6(小6)", "C1(中1)", "C2(中2)", "C3(中3)","K1(高1)", "K2(高2)", "K3(高3)", };
+String[] gradeAllay = { "", "小１", "小２", "小３", "小４", "小５", "小６", "中１", "中２", "中３","高１", "高２", "高３", };
 %>
 <html>
 <head>
@@ -56,15 +48,11 @@ String[] gradeAllay = { "", "S1(小1)", "S2(小2)", "S3(小3)", "S4(小4)", "S5(
 		<form action="/access1/Mode2addServlet" method="post"
 			name="login_form">
 			<h1 style="text-align: center">
-				<font face="HG丸ｺﾞｼｯｸM-PRO" color="#52c2d0">生徒入力画面</font>
+				<font face="HG丸ｺﾞｼｯｸM-PRO" color="blue">生徒情報の変更</font>
 			</h1>
-			<font color="red"> <%
- if (msg != null) {
- %> <%=msg%> <%
- }
- %>
-			</font>
-
+			<h3 style="text-align: center">
+			<font face="HG丸ｺﾞｼｯｸM-PRO" color="blue"> <%if (msg != null) { %> <%=msg%> <% } %>
+			</font></h3>
 			<table id="mode2">
 				<colgroup>
 					<col width="500">
@@ -75,7 +63,8 @@ String[] gradeAllay = { "", "S1(小1)", "S2(小2)", "S3(小3)", "S4(小4)", "S5(
 					<th>生徒番号</th>
 					<td>　　</td>
 					<td><input type="text" name="code" pattern="\d*" required
-						size="8" placeholder="整数６桁" maxlength="6" value="<%=student.getCode()%>"><br></td>
+						size="8" placeholder="整数６桁" maxlength="6" value="<%=student.getCode()%>"readonly>
+						<font color="#aaa"> 生徒番号は変更できません</font></td>
 				</tr>
 				<tr>
 					<th>氏名</th>
@@ -87,15 +76,22 @@ String[] gradeAllay = { "", "S1(小1)", "S2(小2)", "S3(小3)", "S4(小4)", "S5(
 					<th>学年コード</th>
 					<td></td>
 					<td><select name="gradeAllay">
-							<%String select = "";for (String gra : gradeAllay) {if (grade.equals(gra)) {
+							<%
+							String select = "";
+							for (String gra : gradeAllay) {
+								if (student.getGrade().equals(gra)) {
 									select = "selected=\"selected\"";
 								} else {
-									select = "";}{%>
-							<option <%=select%>><%=student.getGrade()%></option>
+									select = "";
+								}
+								{
+							%>
+							<option <%=select%>><%=gra%></option>
 							<%
 							}
 							}
 							%>
+							<option selected><%=student.getGrade()%>
 					</select><br></td>
 				</tr>
 				<tr>
@@ -103,11 +99,11 @@ String[] gradeAllay = { "", "S1(小1)", "S2(小2)", "S3(小3)", "S4(小4)", "S5(
 					<td></td>
 					<td><select name="send" required>
 							<option></option>
-							<option value="ok">ｏｋ</option>
-							<option value="no">ｎｏ</option>
-							<option><%=student.getSend()%>
+							<option value="ok">ok</option>
+							<option value="no">no</option>
+							<option selected><%=student.getSend()%>
 							</option>
-					</select><font color="#aaa"> ok(送る) / no(送らない)</font></td>
+					</select><font color="#aaa"> ok(受取る) / no(受取らない)</font></td>
 				</tr>
 				<tr>
 					<th>メールアドレス</th>
@@ -118,8 +114,8 @@ String[] gradeAllay = { "", "S1(小1)", "S2(小2)", "S3(小3)", "S4(小4)", "S5(
 				<tr>
 					<th>ポイント</th>
 					<td></td>
-					<td><input type="number" name="point" size="6" required
-						maxlength="4" step="10" min="0" max="9999" id="number"
+					<td><input type="number" name="point" size="6"
+						maxlength="4" step="1" min="0" max="9999" id="number"
 						value="<%=student.getPoint()%>"></td>
 				</tr>
 				<tr>
@@ -134,7 +130,6 @@ String[] gradeAllay = { "", "S1(小1)", "S2(小2)", "S3(小3)", "S4(小4)", "S5(
 			<table>
 				<tr>
 					<td><input type="button" onclick="history.back()" value="戻る"></td>
-					<td><input type="reset" value="クリア"></td>
 					<td><input type="submit" name="botton" value="次へ"></td>
 				</tr>
 			</table>

@@ -18,10 +18,13 @@ form {
 form h1,form p {
   color: rgb(0, 0, 255);
   font-weight: 500;
+  text-align: center;
 }
 
 form p {
+  color: rgb(0, 0, 255);
   font-size: 15px;
+  text-align: center;
 }
 form select[name="mode"] {
   border: 0;
@@ -159,19 +162,37 @@ a.btn_04:hover {
   border: 2px solid rgb(0, 0, 255);
 }
 
+#buttonStyle {
+	margin: auto;
+}
 
+/*
+.inner {
+  max-width: 1500px;
+  width: 97%;
+  margin: 0 auto;
+}
 
+.design04 {
+  width: 100%;
+  min-width: 450px;
+  overflow-x: scroll;
+  border: 1px solid #888;
+  border-collapse: collapse;
+}
 
+.design04 th, .design04 td {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #888;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+.design04 th {
+  background: #f5f5f5;
+  /* 以下追加部分。表の項目を固定する */
+/*  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+}
+*/

@@ -5,7 +5,10 @@
 <%@ page import="java.util.List,beans.Student"%>
 <%@ page import="beans.Student"%>
 <%
+List<Student> studentList = (List<Student>) session.getAttribute("studentList");
 Student student = (Student) session.getAttribute("student");
+//結果メッセージをリクエストスコープから取得
+String msg = (String) request.getAttribute("msg");
 %>
 <html>
 <head>
@@ -21,10 +24,14 @@ Student student = (Student) session.getAttribute("student");
 <body>
 
 	<div class="mx-auto" style="width: 700px;">
+
 		<form action="/access1/Mode2DelServlet" method="post">
 			<h1 style="text-align: center">
-				<font face="HG丸ｺﾞｼｯｸM-PRO" color="#52c2d0">削除確認</font>
+				<font face="HG丸ｺﾞｼｯｸM-PRO" color="blue">削除データ確認</font>
 			</h1>
+			<h3 style="text-align: center">
+			<font face="HG丸ｺﾞｼｯｸM-PRO" color="blue"> <%if (msg != null) { %> <%=msg%> <% } %>
+			</font></h3>
 
 			<table id="mode2">
 				<colgroup>
@@ -71,7 +78,7 @@ Student student = (Student) session.getAttribute("student");
 			<table><tr>
 
 			<td><input type="button" onclick="history.back()" value="戻る"></td>
-			<td><input type="submit" name="botton" value="削除します"></td></tr></table>
+			<td><input type="submit" name="botton" value="削除"></td></tr></table>
 				</form>
 	</div>
 </body>

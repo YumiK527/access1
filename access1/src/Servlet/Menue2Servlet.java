@@ -23,37 +23,38 @@ public class Menue2Servlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		//アクション属性取得
-		String menue = request.getParameter("menue");
-		HttpSession session = request.getSession();
 
+		String sort = request.getParameter("sort");
+		HttpSession session = request.getSession();
 		//生徒リストをスコープから削除
 		session.removeAttribute("studentList");
+		session.removeAttribute("msg");
 
+		//アクション属性取得
+		String menue = request.getParameter("menue");
+
+		//メソッド実行し生徒リストを用意
+		List<Student> studentList = new StudentDBConnect().showSortGrade();
+		//セッションスコープに生徒リスト保存
+		session.setAttribute("studentList", studentList);
 		//メニューの場合
 		if (menue.equals("入退室連絡")){
-			//生徒リストを再度取得
-			//入退室連絡画面へフォワード
-			//ログイン成功の処理 mode1：入退室連絡
-			//匿名クラスでメソッド実行し生徒リストを用意
-			List<Student> studentList = new StudentDBConnect().showAll();
-			//セッションスコープに生徒リスト保存
-			session.setAttribute("studentList", studentList);
+			//セッションスコープに処理モードを保存
+			session.setAttribute("processmode", "mode1top");
 			//入退室連絡画面へフォワード
 			request.getRequestDispatcher("/WEB-INF/jsp/mode1.jsp").forward(request, response);
 		}else if (menue.equals("管理画面")){
-			//生徒リストを再度取得
-			//管理面へフォワード
-			//匿名クラスでメソッド実行し生徒リストを用意
-			List<Student> studentList = new StudentDBConnect().showAll();
-			//セッションスコープに生徒リスト保存
-			session.setAttribute("studentList", studentList);
+			request.setAttribute("sort", sort);
+			//セッションスコープに処理モードを保存
+			session.setAttribute("processmode", "mode2top");
 			//管理画面へフォワード
 			request.getRequestDispatcher("/WEB-INF/jsp/mode2.jsp").forward(request, response);
 		}else {
-			//ログイン情報をスコープから削除
+			//スコープから削除
 			session.removeAttribute("account");
-
+			session.removeAttribute("studentList");
+			session.removeAttribute("msg");
+			session.removeAttribute("processmode");
 			//ログイン画面へフォワード
 			request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request,response);
 		}

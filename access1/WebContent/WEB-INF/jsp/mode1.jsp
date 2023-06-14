@@ -3,6 +3,9 @@
 <!DOCTYPE html>
 <%@ page import="java.util.List,beans.Student"%>
 <%
+//処理モードをセッションスコープから取得
+String processmode = (String) request.getAttribute("processmode");
+
 List<Student> studentList = (List<Student>) session.getAttribute("studentList");
 
 // 結果メッセージをリクエストスコープから取得
@@ -29,26 +32,19 @@ select {
 <body>
 
 	<div class="mx-auto" style="width: 500px;">
-		<form action="/access1/Mode1ConfirmServlet" method="post" name="login_form">
+		<form method="post" action="?" name="login_form">
 			<h1 style="text-align:center">
 				<font face="HG丸ｺﾞｼｯｸM-PRO">入退室連絡</font>
 			</h1>
-						<font color="red">
-
-						<% if (message != null) { %>
-							<%= message %>
-						<% } %>
-					</font>
+			<font color="red">
+				<% if (message != null) { %> <%= message %><%}%>
+			</font>
 			<p>該当する生徒を選択してください。</p>
-
-
-			<%
-			if (studentList != null && !studentList.isEmpty()) {
-			%>
+			<%if (studentList != null && !studentList.isEmpty()) {%>
 			<table class="design04">
 				<tr>
 					<th>
-					<font size="5"><select name="inout" required style="text-align:-webkit-center;">
+					<font size="5"><select name="inout"  style="text-align:-webkit-center;">
 					<option value="" disabled selected style="display: none;"> 選択</option>
 					<option value="in">入 室</option>
 					<option value="out">退 室</option>
@@ -59,54 +55,43 @@ select {
 					<th>名 前</th>
 					<th>学 年</th>
 				</tr>
-				<%
-				for (Student student : studentList) {%>
-
-
+				<%for (Student student : studentList) {%>
 				<tr>
 					<td><input type="checkbox" name="check"
 						value="<%=student.getCode()%>"></td>
 					<td><%=student.getCode()%></td>
 					<td><%=student.getName()%></td>
 					<td><%=student.getGrade()%></td>
-				</tr>
-				<%
-				}
-				%>
+				</tr><%}%>
 				</tbody>
 			</table>
 			<br> <br>
-
-
 			<table>
 				<tr>
-					<td><input type="radio" name="mailText" value="メッセージなし" required></td>
+					<td><input type="radio" name="mailText" value="メッセージなし" ></td>
 					<td><font color="yellow">メッセージなし</font></td>
 				</tr>
 			</table>
 			<table>
 				<tr>
-					<td><input type="radio" name="mailText" value="メール発信は遅れましたが通常の時刻に確認しています。" required></td>
+					<td><input type="radio" name="mailText" value="メール発信は遅れましたが通常の時刻に確認しています。" ></td>
 					<td><font color="yellow">メール発信は遅れましたが通常の時刻に確認しています。</font></td>
 				</tr>
 			</table>
 			<table>
 				<tr>
-					<td><input type="radio" name="mailText" value="選択肢3" required></td>
+					<td><input type="radio" name="mailText" value="msgFree" ></td>
 					<td><p style="border: solid 3px black">
-							<input type="text" name="textarea" style="width: 450px; height: 30px;"  value="メール発信は遅れましたが　　：　　に確認しています。" >
+							<input type="text" name="textarea" style="width: 450px; height: 30px;"
+							value="メール発信は遅れましたが　　：　　に確認しています。" >
 				</tr>
 			</table>
-
-			<input type="submit" name="botton" value="確認画面へ">
+			<input type="submit" name="menue" value="確認画面へ" formaction="/access1/Mode1ConfirmServlet">
+			<input type="submit" name="menue"  value="メニュー" formaction="/access1/Menue1Servlet">
 			<input type="button" onclick="history.back()" value="戻る">
-			<%
-			} else {
-			%>
+			<%} else {%>
 			<p>ーー生徒リストは空ですーー</p>
-			<%
-			}
-			%>
+			<%}%>
 		</form>
 	</div>
 </body>

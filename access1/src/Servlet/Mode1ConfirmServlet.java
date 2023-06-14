@@ -2,7 +2,6 @@ package Servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +24,9 @@ public class Mode1ConfirmServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String message = "";
 
+		//アクション属性取得
+		String menue = request.getParameter("menue");
+
 
 		//リクエストパラメータの取得
 		String inout = request.getParameter("inout");
@@ -33,37 +35,35 @@ public class Mode1ConfirmServlet extends HttpServlet {
 		String textarea = request.getParameter("textarea");
 
 		//未選択の有無をチェック
-		message = ValueCheck.checkStudent(check);
+		message = ValueCheck.checkMode1(inout,check,mailText);
 		//msgをリクエストスコープに保存
 		request.setAttribute("msg", message);
 
-		if ("生徒が選択されていません。<br>".equals(message)) {
-			//ログイン失敗時 同じページログインページにフォワード
+
+		if(message !="入力チェック<br>") {
+			request.setAttribute("msg", message);
+			//同じページログインページにフォワード
 			request.getRequestDispatcher("/WEB-INF/jsp/mode1.jsp").forward(request, response);
-		} else  {
+		} else {
 			//msgをリクエストスコープに保存
 			request.setAttribute("inout", inout);
 			request.setAttribute("check", check);
 			request.setAttribute("mailText", mailText);
 			request.setAttribute("textarea", textarea);
-
 			//選択されたチェックボックスの生徒番号を取得し、変数checkedCodeに代入する。
 			String[] checkedCode = request.getParameterValues("check");
 			//checkedCodeリストから、生徒レコードを取得し生徒リストを作成
 			Student student =null;
-			List<Student> studentList = new ArrayList<Student>();
+			ArrayList<Student> studentList = new ArrayList<Student>();
 			for (String co : checkedCode) {
 				student = new StudentDBConnect().showCode(co);
 				studentList.add(student);
+				//セッションスコープに生徒リスト保存
+				HttpSession session = request.getSession();
+				session.setAttribute("studentList", studentList);
 			}
-
-
-			//セッションスコープに生徒リスト保存
-			HttpSession session = request.getSession();
-			session.setAttribute("studentList", studentList);
 			request.getRequestDispatcher("/WEB-INF/jsp/mode1Confirm.jsp").forward(request, response);
+
 		}
-
 	}
-
 }

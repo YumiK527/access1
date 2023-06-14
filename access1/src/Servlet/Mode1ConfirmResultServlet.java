@@ -19,6 +19,8 @@ public class Mode1ConfirmResultServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String message = "";
 
+		//メール送信処理
+
 		//結果画面にフォワード
 		request.getRequestDispatcher("/WEB-INF/jsp/mode1ConfirmResult.jsp").forward(request, response);
 

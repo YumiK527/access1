@@ -16,26 +16,26 @@ import javax.servlet.http.HttpSession;
 public class Menue1Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		//アクション属性取得
 		String menue = request.getParameter("menue");
 		HttpSession session = request.getSession();
+		String sort="並べ替え：学年順";
 
 		//メニューの場合
 		if (menue != null){
 			//生徒リストをスコープから削除
+			request.setAttribute("sort", sort);
 			session.removeAttribute("studentList");
-			//入退室連絡画面へフォワード
+			//メニュー画面へフォワード
 			request.getRequestDispatcher("/WEB-INF/jsp/menue.jsp").forward(request,response);
 		}else {//ログアウトの場合
 			//ログイン情報をスコープから削除
 			session.removeAttribute("account");
 			//生徒リストをスコープから削除
 			session.removeAttribute("studentList");
-
-			//ログイン画面へフォワード
+				//ログイン画面へフォワード
 			request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request,response);
 
 		}

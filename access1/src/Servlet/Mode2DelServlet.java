@@ -25,9 +25,9 @@ public class Mode2DelServlet extends HttpServlet {
 		//セッションスコープから登録情報を取得
 		HttpSession session = request.getSession();
 		String check =  (String) session.getAttribute("check");
-		//DAOでデータベースに1件削除
+		//DAOでデータベースから件削除
 		boolean resultStudent =new StudentDBConnect().deleteStudent(check);
-System.out.println(check);
+
 		String msg ="";
 		if(resultStudent) {
 			msg = "削除しました。";
