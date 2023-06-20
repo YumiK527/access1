@@ -47,12 +47,49 @@ select {
 		<%
 			if (studentList != null && !studentList.isEmpty()) {
 			%>
-		<table>
-			<tr>
-				<th><input type="submit" name="sort" value="<%=sort%>"
-					formaction="/access1/SortServlet"></th>
-			</tr>
-		</table>
+
+		<TABLE>
+			<TR>
+				<TD>
+					<table>
+						<tr>
+							<td><input type="submit" name="sort" value="<%=sort%>"
+								formaction="/access1/SortServlet"></td>
+						</tr>
+					</table><TD>
+					<table>
+						<tr>
+							<td><input type="submit" name="sort" value="今日の入退室状況"
+								formaction="/access1/TimeClockServlet"></td>
+						</tr>
+					</table>
+				</TD>
+				<TD>
+					<table>
+						<tr>
+							<td width="600"></td>
+						</tr>
+					</table>
+				</TD>
+				<TD>
+					<table>
+						<tr>
+							<td><input type="submit" name="sort" value="昨日の入退室状況"
+								formaction="/access1/YesterdayServlet"></td>
+						</tr>
+					</table>
+				</TD>
+				<TD>
+					<table>
+						<tr>
+							<td><input type="submit" name="sort" value="生徒一覧CSV出力"
+								formaction="/access1/CsvOutputServlet"></td>
+						</tr>
+					</table>
+				</TD>
+			</TR>
+		</TABLE>
+
 		<table class="design04">
 			<tr>
 				<th><font size="5"><select name="done"

@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <%@ page import="java.util.List,beans.Student"%>
 <%
-// 結果メッセージをリクエストスコープから取得
-String inout = (String) request.getAttribute("inout");
-String check = (String) request.getAttribute("check");
-String mailText = (String) request.getAttribute("mailText");
-String textarea = (String) request.getAttribute("textarea");
+// 結果メッセージをセッションスコープから取得
+String inout = (String) session.getAttribute("inout");
+String check = (String) session.getAttribute("check");
+String mailText = (String) session.getAttribute("mailText");
+String textarea = (String) session.getAttribute("textarea");
 List<Student> studentList = (List<Student>) session.getAttribute("studentList");
 
 %>
@@ -48,7 +48,7 @@ List<Student> studentList = (List<Student>) session.getAttribute("studentList");
 			}
 			%>
 			<%
-			if (mailText.equals("選択肢3")) {//メッセージの表示
+			if (mailText.equals("msgFree" )) {//メッセージの表示
 			%>
 			<h3>
 				<font face="HG丸ｺﾞｼｯｸM-PRO" color="#ff69b4"><%=textarea%></font>

@@ -172,7 +172,39 @@ public boolean deleteStudent(String code) {
 	}
 	return isDelete;
 }
+//入室時ポイント加算分のデータ上書き処理//////////////////////////
+public boolean poinAddStudent(String point,String code) {
+	//SQL文の用意
+	String sql ="update student set point = ?";
+	sql +="where code = ?;";
+	//リターン用変数
+	boolean isInsert = true;
 
+	//SQLの実行
+	try (Connection con = DriverManager.getConnection(URL, USER,
+			PASSWORD)) {
+		PreparedStatement ps = con.prepareStatement(sql);
+		//商品データをSQL文に差し替え
+		ps.setString(1, point);
+		ps.setString(2, code);
+
+
+		int result = ps.executeUpdate();
+		System.out.println(result);
+		if (result == 0) {
+			isInsert =false;
+			System.out.println( "登録エラー");
+		}else {
+		System.out.println( "登録しました");
+//		isInsert = true;
+		}
+	} catch (Exception e) {
+		System.err.println("登録エラー");
+		isInsert = false;
+	}
+	System.err.println(isInsert);
+	return isInsert;
+}/////////////////////////////////////////////////////////////////
 //生徒データを学年順に並べ替えるメソッド
 public List<Student> showSortGrade () {
 
@@ -250,5 +282,65 @@ public List<Student> showSortCode () {
 	return studentList;
 	}
 
+/*
+ * 検索結果からCSV形式の文字列を作成します。
+ */
+public List<String> makeCSVData(ResultSet rs) throws Exception {
+	List<String> csvData = new ArrayList<String>();
+	StringBuilder sb = new StringBuilder();
+
+	while (rs.next()) {
+		sb = new StringBuilder();
+
+        sb.append(rs.getString("code"));
+        sb.append(",");
+        sb.append(rs.getString("name"));
+        sb.append(",");
+        sb.append(rs.getString("grade"));
+        sb.append(",");
+        sb.append(rs.getString("pass"));
+        sb.append(",");
+        sb.append(rs.getString("mailaddres"));
+        sb.append(",");
+        sb.append(rs.getString("send"));
+        sb.append(",");
+        sb.append(rs.getString("point"));
+        sb.append(",");
+        sb.append(rs.getString("gradecode"));
+
+        csvData.add(sb.toString());
+	}
+
+	return csvData;
 }
+	/*
+	 * 「student」テーブルから全てのデータを検索し、結果をCSV形式に整形したデータをリストで返します。
+     * （PreparedStatement方式）
+	 */
+    public List<String> studentAllCsvFormat() {
+    	List<String> csvData = new ArrayList<String>();
+
+        /* 1) SQL文の準備 */
+        String sql = "SELECT * FROM student ORDER BY code;";
+
+        /* 2) PostgreSQLへの接続 */
+		try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+			PreparedStatement st = con.prepareStatement(sql);) {
+
+			/* 3) SQL文の実行 */
+			ResultSet rs = st.executeQuery();
+
+			/* 4) 結果からCSV形式データを作成 */
+			csvData = makeCSVData(rs);
+
+		} catch (Exception e) {
+			System.out.println("DBアクセス時にエラーが発生しました。");
+			e.printStackTrace();
+		}
+
+        return csvData;
+    }
+
+
+}//end
 

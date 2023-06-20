@@ -68,7 +68,7 @@ select {
 			<br> <br>
 			<table>
 				<tr>
-					<td><input type="radio" name="mailText" value="メッセージなし" ></td>
+					<td><input type="radio" name="mailText" value="-" ></td>
 					<td><font color="yellow">メッセージなし</font></td>
 				</tr>
 			</table>
@@ -82,7 +82,7 @@ select {
 				<tr>
 					<td><input type="radio" name="mailText" value="msgFree" ></td>
 					<td><p style="border: solid 3px black">
-							<input type="text" name="textarea" style="width: 450px; height: 30px;"
+							<input type="text" name="textText" style="width: 450px; height: 30px;"
 							value="メール発信は遅れましたが　　：　　に確認しています。" >
 				</tr>
 			</table>

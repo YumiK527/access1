@@ -1,0 +1,192 @@
+@charset "UTF-8";
+
+body {
+  background-color: rgb(255, 255, 255);
+}
+
+form {
+  width: 80%;
+  padding: 40px 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-color: rgb(255, 255, 255);
+  text-align: center;
+}
+
+form h1,form p {
+  color: rgb(255, 0, 128);
+  font-weight: 500;
+  text-align: center;
+}
+
+form p {
+  color: rgb(255, 0, 128);
+  font-size: 15px;
+  text-align: center;
+}
+form select[name="mode"] {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  border: 2px solid RGB(102,102,204);
+  padding: 15px 10px;
+  width: 225px;
+  outline: none;
+  border-radius: 24px;
+  transition: 0.25s;
+  text-align: center;
+  color: RGB(102,102,204);
+}
+
+
+
+form input[type = "id"],form input[type = "password"] {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  border: 2px solid RGB(102,102,204);
+  padding: 15px 10px;
+  width: 200px;
+  outline: none;
+  border-radius: 24px;
+  transition: 0.25s;
+  text-align: center;
+  color: rgb(255, 0, 128);
+}
+
+form input[type = "id"]:focus,form input[type = "password"]:focus,form select[name="mode"]:focus {
+  width: 280px;
+  background-color: RGB(102,102,204);
+  color: rgb(0, 0, 0);
+}
+
+form input[type = "submit"]{
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  border: 2px solid RGB(255, 0, 128);
+  padding: 15px 10px;
+  width: 220px;
+  outline: none;
+  color: rgb(255, 0, 128);
+  border-radius: 25px;
+  transition: 0.25s;
+  text-align: center;
+  cursor: pointer;
+}
+
+form input[type = "submit"]:hover {
+  background-color: RGB(255,153,204);
+  border: 2px solid rgb(255, 0, 128);
+  color: rgb(255, 255, 255);
+}
+
+::placeholder {
+  color: white;
+}
+
+form input[type = "button"]{
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  border: 2px solid RGB(255, 0, 128);
+  padding: 15px 10px;
+  width: 220px;
+  outline: none;
+  color: rgb(255, 0, 128);
+  border-radius: 25px;
+  transition: 0.25s;
+  text-align: center;
+  cursor: pointer;
+}
+
+form input[type = "button"]:hover {
+  background-color: RGB(255,153,204);
+  border: 2px solid rgb(255, 0, 128);
+  color: rgb(255, 255, 255);
+}
+
+
+
+.design04 {
+ width: 100%;
+ text-align: center;
+ border-collapse: collapse;
+ border-spacing: 0;
+ background: #ff99ff;
+}
+.design04 tr:nth-child(2n+1) {
+ background: #ffccff;
+}
+.design04 th {
+ padding: 10px;
+ background: #ff66ff;
+ border-right: solid 1px #ff66ff;
+ color: #ffffcc;
+ text-align: center;
+}
+.design04 th:last-child {
+ border-right: none;
+}
+.design04 td {
+ padding: 10px;
+ border-right: solid 1px #ff66ff;
+}
+.design04 td:last-child {
+ border-right: none;
+}
+
+a.btn_04 {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  border: 2px solid #f0f8ff;
+  padding: 15px 10px;
+  width: 200px;
+  height:20px;
+  outline: none;
+  color: white;
+  border-radius: 25px;
+  transition: 0.25s;
+  text-align: center;
+  cursor: pointer;
+}
+a.btn_04:hover {
+  background-color: rgb(255, 0, 128);
+  border: 2px solid rgb(255, 0, 128);
+}
+
+#buttonStyle {
+	margin: auto;
+}
+
+#search-box input[type="submit"] {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 10px auto;
+  border: 2px solid RGB(255, 255, 255);
+  padding: 5px 10px;
+  width: 100px;
+  height:30px;
+  outline: none;
+  color: rgb(255, 255, 255);
+  border-radius: 25px;
+  transition: 0.25s;
+  text-align: center;
+  cursor: pointer;
+
+}
+
+
+
+
+
+
